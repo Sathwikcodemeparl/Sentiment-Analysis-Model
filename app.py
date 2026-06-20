@@ -144,17 +144,15 @@ with gr.Blocks(title="📊 NLP Vectorization Dashboard") as iface:
     )
 
 
-# 🚨 VERCEL SERVERLESS PRODUCTION ROUTING LAYER
+# 🚨 VERCEL SERVERLESS PRODUCTION ROUTING LAYER (THE BASE ROUTE WORKAROUND)
 from fastapi import FastAPI
 
 # 1. Initialize a FastAPI app
 app = FastAPI()
 
-# 2. Mount your Gradio interface onto the root path safely
-app = gr.mount_gradio_app(app, iface, path="/")
+# 2. Mount your Gradio interface onto the root path using the "" patch
+app = gr.mount_gradio_app(app, iface, path="")
 
-# 🚨 THE FIX: Only call launch() if running directly on your laptop
+# Only call launch() if running directly on your laptop
 if __name__ == "__main__":
-    # This block executes locally via interactive_test.py
-    # Vercel reads the 'app' variable above and completely ignores this block
     iface.launch(debug=True)
