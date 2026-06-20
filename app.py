@@ -60,7 +60,7 @@ def process_and_beautify(user_input):
     
     ---
     ### 🔤 STAGE 2: VOCABULARY MATCHING
-    > **Action:** Scans the text and maps it directly against your 25,000-word dataset features.
+    > **Action:** Scans the text and maps it directly against your  dataset features.
     * **Isolated Key Tokens:** `{words_in_input if words_in_input else "None found in dictionary"}`
     
     ---
@@ -144,15 +144,17 @@ with gr.Blocks(title="📊 NLP Vectorization Dashboard") as iface:
     )
 
 
-# 🚨 VERCEL SERVERLESS PRODUCTION ROUTING LAYER (FASTAPI FIX)
+# 🚨 VERCEL SERVERLESS PRODUCTION ROUTING LAYER
 from fastapi import FastAPI
 
-# 1. Initialize a FastAPI app instead of Flask
+# 1. Initialize a FastAPI app
 app = FastAPI()
 
-# 2. Mount your Gradio interface to the root path safely
+# 2. Mount your Gradio interface onto the root path safely
 app = gr.mount_gradio_app(app, iface, path="/")
 
+# 🚨 THE FIX: Only call launch() if running directly on your laptop
 if __name__ == "__main__":
-    # This block executes when you run it locally on your machine via interactive_test.py
+    # This block executes locally via interactive_test.py
+    # Vercel reads the 'app' variable above and completely ignores this block
     iface.launch(debug=True)
