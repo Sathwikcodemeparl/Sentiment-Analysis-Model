@@ -1,0 +1,20 @@
+# Ignore the local Python virtual environment
+venv/
+.venv/
+env/
+
+# Ignore Python auto-generated compilation caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Gradio's temporary local session caches
+.gradio/
+
+# Ignore OS-specific hidden system configuration files
+.DS_Store
+Thumbs.db
+
+# Optional: Ignore raw data CSV files if you only want to share the code/models
+# *.csv
