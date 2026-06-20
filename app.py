@@ -1,19 +1,24 @@
+import os
 import gradio as gr
 import joblib
 import re
 import pandas as pd
-import os
-from flask import Flask
+from fastapi import FastAPI
+
+# 🚨 THE CLOUD PATH FIX: Dynamically find the absolute path of this folder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "sentiment_model.pkl")
+VECTORIZER_PATH = os.path.join(BASE_DIR, "vectorizer.pkl")
 
 print("🧠 Loading local Machine Learning Sentiment Engine...")
 try:
-    sentiment_model = joblib.load("sentiment_model.pkl")
-    vectorizer = joblib.load("vectorizer.pkl")
+    sentiment_model = joblib.load(MODEL_PATH)
+    vectorizer = joblib.load(VECTORIZER_PATH)
     ml_engine_ready = True
     print("✅ System Core Loaded Successfully!")
-except FileNotFoundError:
+except Exception as e:
     ml_engine_ready = False
-    print("❌ Error: Missing weights. Run training.py via your control hub first.")
+    print(f"❌ Error loading models: {str(e)}")
 
 def clean_text(text):
     if not isinstance(text, str):
